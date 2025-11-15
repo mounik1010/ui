@@ -1,30 +1,39 @@
 import 'package:flutter/material.dart';
 
-void main() => runApp(MaterialApp(home: MyForm()));
+final formKey = GlobalKey<FormState>();   // <-- Add this globally
 
-class MyForm extends StatelessWidget {
-  final formKey = GlobalKey<FormState>();
+void main() {
+  runApp(
+    MaterialApp(
+      home: Scaffold(
+        body: Center(
+          child: Form(                     // <-- Wrap with Form
+            key: formKey,
+            child: Column(
+              children: [
+                Text("Name:"),
+                TextFormField(
+                  validator: (v) => v!.isEmpty ? "Required" : null,
+                ),
 
-  @override
-  Widget build(context) {
-    return Scaffold(
-      body: Form(
-        key: formKey,
-        child: Column(
-          children: [
-            Text("Name:"),
-            TextFormField(validator: (v) => v!.isEmpty ? "Required" : null),
-            Text("Roll.No:"),
-            TextFormField(validator: (v) => v!.isEmpty ? "Required" : null),
-            ElevatedButton(
-              onPressed: () {
-                if (formKey.currentState!.validate()) print("Valid!");
-              },
-              child: Text("Submit"),
-            )
-          ],
+                Text("Roll.No:"),
+                TextFormField(
+                  validator: (v) => v!.isEmpty ? "Required" : null,
+                ),
+
+                ElevatedButton(
+                  onPressed: () {
+                    if (formKey.currentState!.validate()) {
+                      print("Valid!");
+                    }
+                  },
+                  child: Text("Submit"),
+                ),
+              ],
+            ),
+          ),
         ),
       ),
-    );
-  }
+    ),
+  );
 }
